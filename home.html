@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DocumentReader</title>
+<!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link
+      class="jsbin"
+      href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+
+    <style>
+
+
+
+        #img1 {
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+    display: block;
+    margin-left: auto;
+    margin-right: auto
+          height:100px
+          width:auto;/*maintain aspect ratio*/
+          max-width:500px;
+
+}
+
+.txt
+{
+    position:absolute;
+    bottom:83%;
+    left:60%;
+}
+
+table{
+            border-collapse: collapse;
+            border-spacing: 0;
+            background-color:#ffffff;
+            filter:alpha(opacity=40);
+            opacity:0.95;
+        }
+        th, td{
+            padding: 10px 20px;
+            border:1px solid black;
+        }
+#tr1
+{
+border:none;
+}
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 99; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+}
+/* Modal Content (image) */
+.modal-content {
+    margin: auto;
+    display: block;
+    width: 75%;
+    //max-width: 75%;
+}
+#caption {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+    text-align: center;
+    color: #ccc;
+    padding: 10px 0;
+    height: 150px;
+}
+@-webkit-keyframes zoom {
+    from {-webkit-transform:scale(1)}
+    to {-webkit-transform:scale(2)}
+}
+@keyframes zoom {
+    from {transform:scale(0.4)}
+    to {transform:scale(1)}
+}
+@-webkit-keyframes zoom-out {
+    from {transform:scale(1)}
+    to {transform:scale(0)}
+}
+@keyframes zoom-out {
+    from {transform:scale(1)}
+    to {transform:scale(0)}
+}
+.modal-content, #caption {
+    -webkit-animation-name: zoom;
+    -webkit-animation-duration: 0.6s;
+    animation-name: zoom;
+    animation-duration: 0.6s;
+}
+.out {
+  animation-name: zoom-out;
+  animation-duration: 0.6s;
+}
+@media only screen and (max-width: 700px){
+    .modal-content {
+        width: 100%;
+    }
+}
+
+    </style>
+    <script>
+
+     $(#file).bind('change',function(){
+                alert(this.files[0].size);
+            });
+
+
+      </script>
+</head>
+<body>
+<div>
+    <img src="./static/images/ocr2.jpg" width="1337px" height="600px" alt="image not found"/>
+    <p class="txt" style="text-align: right;color:#253E6F; font-size: 30px; font-family:Yahoo Sans Helvetica Arial; font-weight: bold; margin-right:50px;">Welcome to OCR for KYC Document</p>
+
+</div>
+<div>
+<table style="margin-top:1%;margin-left:6%" id="tbl1">
+    <form class="contact_form m-2" action="/" name="frm" method = "post" enctype="multipart/form-data">
+    <tr height="300px">
+        <th id="tr1" colspan="2" style="font-size:22px;text-decoration:underline;color:DarkOliveGreen;"><h1 align="center" style="margin-top:25%">DOCUMENT SUBMISSION</h1></th>
+        <td id="tr1" rowspan="5">
+<div style="margin-top:30%;margin-left:12%">
+            <center><h4><b>Image Preview</b></h4></center>
+              <!--<input class="form-control form-control-sm" id="formFileSm" type="file" onchange="readURL(this);"/> -->
+                  <!-- <img id="img1" height="400" width="500">-->
+    <img id="image" src="" height="400" width="500"/>
+    <p id="imgsize"></p>
+            </div>
+        </td>
+    </tr>
+    <tr>
+
+        <td id="tr1">
+            <div style="margin-top:-10%">
+            <select style="margin-top:-60%;width:100%;height:38px" name="doc_type">
+            <option>Select Document</option>
+            <option value="Adhar Card">Adhar Card</option>
+            <option value="Voter ID Front">Voter ID Front</option>
+            <option value="Voter ID Back">Voter ID Back</option>
+            <option value="Driving License">Driving License</option>
+        </select>
+            </div>
+        </td>
+
+    </tr>
+    <tr height="50px">
+        <td id="tr1"><!--<input type="file" name="file" id="selimg" accept="image/jpg,image/jpeg,image/pdf,image/png" style="width:80;margin-top:3%" onchange="readURL(this);" required></div></td>-->
+            <label class="file">
+                    <input name="file" id="file" type="file" style="width:150%;height:35px" class="form-control form-control-sm"  aria-label="File browser example" onchange="readURL(this);" required />
+          <span class="file-custom"></span>
+</label>
+        </td>
+    </tr>
+    <tr height="100px" id="tr1">
+        <td id="tr1"><div style="margin-top:10%"><input type="submit" value="Submit" style="width:100%;height:50px;background-color:DarkOliveGreen;color:white;font-size:25px;border-radius:5px;cursor:pointer;"></div></td>
+    </tr>
+        <tr>
+            <td id="tr1"></td>
+            <td id="tr1"></td>
+        </tr>
+<tr>
+    <td id="tr1"></td>
+    <td id="tr1"></td>
+</tr>
+        <tr>
+            <td id="tr1"></td>
+            <td id="tr1"></td>
+        </tr>
+
+    </form>
+</table>
+<center>
+    <table id="tbl1" style="margin-top:5%">
+        <tr>
+            <td width="55%" id="tr1">
+                <img src="./static/images/rotate_img.jpg" alt="Not found any image" height="500px" width="700px"/>
+            </td>
+            <td id="tr1">
+                <div class="container-fluid mt-3">
+        <div class="row align-items-start p-2">
+    <div class="col" style="margin-top:25%">
+      <center><h4 style="margin-top:-25%"><b>Result</b></h4></center>
+
+        <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4 border-3">
+            <div id="result"></div>
+
+             <script>
+         var data = "{{doc}}"
+         var data1 = data.replaceAll("b&#39;", "'")
+         var data2 = data1.replaceAll("&#39;", "'")
+         var result = data2.replaceAll(/'/g, '"');
+         //alert(result);
+
+        if(result.includes("Aadhar Number")==true)
+        {
+                                 const obj = JSON.parse(result);
+                               //alert(obj)
+                                let table = document.createElement('table');
+                                let thead = document.createElement('thead');
+                                let tbody = document.createElement('tbody');
+
+                                table.appendChild(thead);
+                                table.appendChild(tbody);
+
+                                let row_1 = document.createElement('tr');
+                                let heading_1 = document.createElement('th');
+                                heading_1.innerHTML = "Title";
+                                let heading_2 = document.createElement('th');
+                                heading_2.innerHTML = "Discription";
+                                row_1.appendChild(heading_1);
+                                row_1.appendChild(heading_2);
+                                thead.appendChild(row_1);
+
+                                let row_2 = document.createElement('tr');
+                                let row_2_data_1 = document.createElement('td');
+                                row_2_data_1.innerHTML = "Name";
+                                let row_2_data_2 = document.createElement('td');
+                                row_2_data_2.innerHTML = ""+obj["result"]["Name"];
+                                row_2.appendChild(row_2_data_1);
+                                row_2.appendChild(row_2_data_2);
+                                tbody.appendChild(row_2);
+
+                                let row_3 = document.createElement('tr');
+                                let row_3_data_1 = document.createElement('td');
+                                row_3_data_1.innerHTML = "Date/Year of Birth";
+                                let row_3_data_2 = document.createElement('td');
+                                row_3_data_2.innerHTML = ""+obj["result"]["Date/Year of Birth"];
+                                row_3.appendChild(row_3_data_1);
+                                row_3.appendChild(row_3_data_2);
+                                tbody.appendChild(row_3);
+
+                                let row_4 = document.createElement('tr');
+                                let row_4_data_1 = document.createElement('td');
+                                row_4_data_1.innerHTML = "Gender";
+                                let row_4_data_2 = document.createElement('td');
+                                row_4_data_2.innerHTML = ""+obj["result"]["Gender"];
+                                row_4.appendChild(row_4_data_1);
+                                row_4.appendChild(row_4_data_2);
+                                tbody.appendChild(row_4);
+
+                                let row_5 = document.createElement('tr');
+                                let row_5_data_1 = document.createElement('td');
+                                row_5_data_1.innerHTML = "Aadhar Number";
+                                let row_5_data_2 = document.createElement('td');
+                                row_5_data_2.innerHTML = ""+obj["result"]["Aadhar Number"];
+                                row_5.appendChild(row_5_data_1);
+                                row_5.appendChild(row_5_data_2);
+                                tbody.appendChild(row_5);
+
+
+                                // Adding the entire table to the body tag
+                                document.getElementById('result').appendChild(table);
+
+
+             }
+             else if(result.includes("Driving License Number")==true)
+             {
+                                const obj = JSON.parse(result);
+                               //alert(obj)
+                                let table = document.createElement('table');
+                                let thead = document.createElement('thead');
+                                let tbody = document.createElement('tbody');
+
+                                table.appendChild(thead);
+                                table.appendChild(tbody);
+
+                                let row_1 = document.createElement('tr');
+                                let heading_1 = document.createElement('th');
+                                heading_1.innerHTML = "Title";
+                                let heading_2 = document.createElement('th');
+                                heading_2.innerHTML = "Discription";
+                                row_1.appendChild(heading_1);
+                                row_1.appendChild(heading_2);
+                                thead.appendChild(row_1);
+
+                                let row_2 = document.createElement('tr');
+                                let row_2_data_1 = document.createElement('td');
+                                row_2_data_1.innerHTML = "Name of license holder";
+                                let row_2_data_2 = document.createElement('td');
+                                row_2_data_2.innerHTML = ""+obj["result"]["Name of license holder"];
+                                row_2.appendChild(row_2_data_1);
+                                row_2.appendChild(row_2_data_2);
+                                tbody.appendChild(row_2);
+
+                                let row_3 = document.createElement('tr');
+                                let row_3_data_1 = document.createElement('td');
+                                row_3_data_1.innerHTML = "Birth Date";
+                                let row_3_data_2 = document.createElement('td');
+                                row_3_data_2.innerHTML = ""+obj["result"]["Birth Date"];
+                                row_3.appendChild(row_3_data_1);
+                                row_3.appendChild(row_3_data_2);
+                                tbody.appendChild(row_3);
+
+                                let row_4 = document.createElement('tr');
+                                let row_4_data_1 = document.createElement('td');
+                                row_4_data_1.innerHTML = "Date of First Issue";
+                                let row_4_data_2 = document.createElement('td');
+                                row_4_data_2.innerHTML = ""+obj["result"]["Date of First Issue"];
+                                row_4.appendChild(row_4_data_1);
+                                row_4.appendChild(row_4_data_2);
+                                tbody.appendChild(row_4);
+
+                                let row_5 = document.createElement('tr');
+                                let row_5_data_1 = document.createElement('td');
+                                row_5_data_1.innerHTML = "Expire Date";
+                                let row_5_data_2 = document.createElement('td');
+                                row_5_data_2.innerHTML = ""+obj["result"]["Expire Date"];
+                                row_5.appendChild(row_5_data_1);
+                                row_5.appendChild(row_5_data_2);
+                                tbody.appendChild(row_5);
+
+                                let row_6 = document.createElement('tr');
+                                let row_6_data_1 = document.createElement('td');
+                                row_6_data_1.innerHTML = "Driving License Number";
+                                let row_6_data_2 = document.createElement('td');
+                                row_6_data_2.innerHTML = ""+obj["result"]["Driving License Number"];
+                                row_6.appendChild(row_6_data_1);
+                                row_6.appendChild(row_6_data_2);
+                                tbody.appendChild(row_6);
+
+
+                                // Adding the entire table to the body tag
+                                document.getElementById('result').appendChild(table);
+             }
+             else if(result.includes("Father Name")==true)
+             {
+                                const obj = JSON.parse(result);
+                               //alert(obj)
+                                let table = document.createElement('table');
+                                let thead = document.createElement('thead');
+                                let tbody = document.createElement('tbody');
+
+                                table.appendChild(thead);
+                                table.appendChild(tbody);
+
+                                let row_1 = document.createElement('tr');
+                                let heading_1 = document.createElement('th');
+                                heading_1.innerHTML = "Title";
+                                let heading_2 = document.createElement('th');
+                                heading_2.innerHTML = "Discription";
+                                row_1.appendChild(heading_1);
+                                row_1.appendChild(heading_2);
+                                thead.appendChild(row_1);
+
+                                let row_2 = document.createElement('tr');
+                                let row_2_data_1 = document.createElement('td');
+                                row_2_data_1.innerHTML = "Name";
+                                let row_2_data_2 = document.createElement('td');
+                                row_2_data_2.innerHTML = ""+obj["result"]["Name"];
+                                row_2.appendChild(row_2_data_1);
+                                row_2.appendChild(row_2_data_2);
+                                tbody.appendChild(row_2);
+
+                                let row_3 = document.createElement('tr');
+                                let row_3_data_1 = document.createElement('td');
+                                row_3_data_1.innerHTML = "Father Name";
+                                let row_3_data_2 = document.createElement('td');
+                                row_3_data_2.innerHTML = ""+obj["result"]["Father Name"];
+                                row_3.appendChild(row_3_data_1);
+                                row_3.appendChild(row_3_data_2);
+                                tbody.appendChild(row_3);
+
+                                // Adding the entire table to the body tag
+                                document.getElementById('result').appendChild(table);
+             }
+             else if(result.includes("Husband Name")==true)
+             {
+                                const obj = JSON.parse(result);
+                               //alert(obj)
+                                let table = document.createElement('table');
+                                let thead = document.createElement('thead');
+                                let tbody = document.createElement('tbody');
+
+                                table.appendChild(thead);
+                                table.appendChild(tbody);
+
+                                let row_1 = document.createElement('tr');
+                                let heading_1 = document.createElement('th');
+                                heading_1.innerHTML = "Title";
+                                let heading_2 = document.createElement('th');
+                                heading_2.innerHTML = "Discription";
+                                row_1.appendChild(heading_1);
+                                row_1.appendChild(heading_2);
+                                thead.appendChild(row_1);
+
+                                let row_2 = document.createElement('tr');
+                                let row_2_data_1 = document.createElement('td');
+                                row_2_data_1.innerHTML = "Name";
+                                let row_2_data_2 = document.createElement('td');
+                                row_2_data_2.innerHTML = ""+obj["result"]["Name"];
+                                row_2.appendChild(row_2_data_1);
+                                row_2.appendChild(row_2_data_2);
+                                tbody.appendChild(row_2);
+
+                                let row_3 = document.createElement('tr');
+                                let row_3_data_1 = document.createElement('td');
+                                row_3_data_1.innerHTML = "Husband Name";
+                                let row_3_data_2 = document.createElement('td');
+                                row_3_data_2.innerHTML = ""+obj["result"]["Husband Name"];
+                                row_3.appendChild(row_3_data_1);
+                                row_3.appendChild(row_3_data_2);
+                                tbody.appendChild(row_3);
+
+                                // Adding the entire table to the body tag
+                                document.getElementById('result').appendChild(table);
+             }
+             else if(result.includes("Date of Birth/Age")==true)
+             {
+                                const obj = JSON.parse(result);
+                               //alert(obj)
+                                let table = document.createElement('table');
+                                let thead = document.createElement('thead');
+                                let tbody = document.createElement('tbody');
+
+                                table.appendChild(thead);
+                                table.appendChild(tbody);
+
+                                let row_1 = document.createElement('tr');
+                                let heading_1 = document.createElement('th');
+                                heading_1.innerHTML = "Title";
+                                let heading_2 = document.createElement('th');
+                                heading_2.innerHTML = "Discription";
+                                row_1.appendChild(heading_1);
+                                row_1.appendChild(heading_2);
+                                thead.appendChild(row_1);
+
+                                let row_2 = document.createElement('tr');
+                                let row_2_data_1 = document.createElement('td');
+                                row_2_data_1.innerHTML = "Gender";
+                                let row_2_data_2 = document.createElement('td');
+                                row_2_data_2.innerHTML = ""+obj["result"]["Gender"];
+                                row_2.appendChild(row_2_data_1);
+                                row_2.appendChild(row_2_data_2);
+                                tbody.appendChild(row_2);
+
+                                let row_3 = document.createElement('tr');
+                                let row_3_data_1 = document.createElement('td');
+                                row_3_data_1.innerHTML = "Date of Birth/Age";
+                                let row_3_data_2 = document.createElement('td');
+                                row_3_data_2.innerHTML = ""+obj["result"]["Date of Birth/Age"];
+                                row_3.appendChild(row_3_data_1);
+                                row_3.appendChild(row_3_data_2);
+                                tbody.appendChild(row_3);
+
+                                let row_4 = document.createElement('tr');
+                                let row_4_data_1 = document.createElement('td');
+                                row_4_data_1.innerHTML = "Address";
+                                let row_4_data_2 = document.createElement('td');
+                                row_4_data_2.innerHTML = ""+obj["result"]["Address"];
+                                row_4.appendChild(row_4_data_1);
+                                row_4.appendChild(row_4_data_2);
+                                tbody.appendChild(row_4);
+
+                                // Adding the entire table to the body tag
+                                document.getElementById('result').appendChild(table);
+             }
+             else if(result.includes("Doc Type Error")==true)
+             {
+                                const obj = JSON.parse(result);
+                               //alert(obj)
+                                let table = document.createElement('table');
+                                let thead = document.createElement('thead');
+                                let tbody = document.createElement('tbody');
+
+                                table.appendChild(thead);
+                                table.appendChild(tbody);
+
+                                let row_1 = document.createElement('tr');
+                                let heading_1 = document.createElement('th');
+                                heading_1.innerHTML = "Title";
+                                let heading_2 = document.createElement('th');
+                                heading_2.innerHTML = "Discription";
+                                row_1.appendChild(heading_1);
+                                row_1.appendChild(heading_2);
+                                thead.appendChild(row_1);
+
+                                let row_2 = document.createElement('tr');
+                                let row_2_data_1 = document.createElement('td');
+                                row_2_data_1.innerHTML = "Doc Type Error";
+                                let row_2_data_2 = document.createElement('td');
+                                row_2_data_2.innerHTML = ""+obj["result"]["Doc Type Error"];
+                                row_2.appendChild(row_2_data_1);
+                                row_2.appendChild(row_2_data_2);
+                                tbody.appendChild(row_2);
+
+                                document.getElementById('result').appendChild(table);
+             }
+    </script>
+
+</div>
+    </div></div>
+        </div>
+</div>
+
+            </td>
+        </tr>
+    </table>
+    </center>
+</div>
+<div id="myModal" class="modal">
+               <img class="modal-content" id="img01">
+            <div id="caption"></div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+     <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+  <script>
+  var path = localStorage.getItem("srcPath");
+      if(path != null && path != ""){
+      $('#image').attr('src', path);
+      $('#image').attr('class', "img");
+      }
+
+      var modal = document.getElementById('myModal');
+// Get the image and insert it inside the modal - use its "alt" text as a caption
+var img = document.getElementById('image');
+var modalImg = document.getElementById("img01");
+var captionText = document.getElementById("caption");
+img.onclick = function(){
+    modal.style.display = "block";
+    modalImg.src = this.src;
+    modalImg.alt = this.alt;
+    captionText.innerHTML = this.alt;
+}
+
+// When the user clicks on <span> (x), close the modal
+modal.onclick = function() {
+    img01.className += " out";
+    setTimeout(function() {
+       modal.style.display = "none";
+       img01.className = "modal-content";
+     }, 400);
+
+ }
+
+       function readURL(input) {
+            if (input.files && input.files[0]) {
+              var reader = new FileReader();
+
+              reader.onload = function (e) {
+                localStorage.setItem("srcPath", e.target.result);
+                $('#image').attr('src', e.target.result);
+                $('#image').attr('class', "img");
+              };
+
+            reader.readAsDataURL(input.files[0]);
+            GetFileSize();
+          }
+
+         }
+        function GetFileSize()
+            {
+                var fi = (document.getElementById('file').files[0].size)/1024;
+                document.getElementById('imgsize').innerHTML = Math.floor(fi)+"KB";
+            }
+
+
+
+     function imgSize(){
+        var image = document.querySelector("#image");
+        var currWidth = image.clientWidth;
+        var currHeight = image.clientHeight;
+        var type = document.getElementById('#d1');
+        alert(type);
+        alert("Current width=" + currWidth + ", " + "Original height=" + currHeight + ", " + "TYPE=" + type);
+    }
+
+
+    </script>
+
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    -->
+</div>
+</div>
+</body>
+</html>
+</html>
